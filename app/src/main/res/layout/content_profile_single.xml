@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+app:layout_behavior="@string/appbar_scrolling_view_behavior"
+tools:context=".activities.profile.ProfileActivity"
+tools:showIn="@layout/activity_profile_single"
+android:paddingBottom="@dimen/activity_vertical_margin"
+android:paddingLeft="@dimen/activity_horizontal_margin"
+android:paddingRight="@dimen/activity_horizontal_margin"
+android:paddingTop="@dimen/activity_vertical_margin">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/profileName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textSize="25sp"
+        tools:text="Razvan Toader"
+        android:textColor="@color/colorPrimaryText"/>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/imageCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profileName">
+
+        <ImageView
+            android:id="@+id/profileImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/bioCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/imageCard"
+        app:contentPadding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Bio"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/bioText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="1.3"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="16sp"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eu ante mi. Nunc efficitur blandit tellus in aliquam. Sed ultrices iaculis faucibus. Duis eleifend quis velit nec sagittis. Fusce gravida urna et dictum malesuada. Proin iaculis, arcu quis aliquam tincidunt, elit diam dapibus felis, nec aliquet magna magna sit amet eros. Nam ultrices ex ut metus fermentum, non consectetur turpis accumsan. Ut eu lobortis velit. Duis dui lectus, convallis id orci quis, convallis vestibulum augue. Nam eu dolor magna. Etiam et sodales lacus. Integer posuere id nisl a ullamcorper. Aliquam eget enim sed enim imperdiet eleifend. Vivamus sit amet lacus in augue gravida imperdiet. Quisque sit amet nulla purus." />
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/skillsCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bioCard"
+        android:layout_marginTop="20dp"
+        app:contentPadding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Skills"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/skillsText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="1.3"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="16sp"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eu ante mi. Nunc efficitur blandit tellus in aliquam. Sed ultrices iaculis faucibus. Duis eleifend quis velit nec sagittis. Fusce gravida urna et dictum malesuada. Proin iaculis, arcu quis aliquam tincidunt, elit diam dapibus felis, nec aliquet magna magna sit amet eros. Nam ultrices ex ut metus fermentum, non consectetur turpis accumsan. Ut eu lobortis velit. Duis dui lectus, convallis id orci quis, convallis vestibulum augue. Nam eu dolor magna. Etiam et sodales lacus. Integer posuere id nisl a ullamcorper. Aliquam eget enim sed enim imperdiet eleifend. Vivamus sit amet lacus in augue gravida imperdiet. Quisque sit amet nulla purus." />
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/postcodeCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/skillsCard"
+        android:layout_marginTop="20dp"
+        app:contentPadding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Postcode"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/postcodeText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:lineSpacingMultiplier="1.3"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textSize="16sp"
+                    tools:text="SE4 1QB"
+                    android:gravity="center_vertical"/>
+
+                <Button
+                    android:id="@+id/seeOnMapBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="See on map"
+                    android:background="@color/colorAccent"
+                    android:textColor="@android:color/white"
+                    android:padding="10dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>
+</android.support.v4.widget.NestedScrollView>
