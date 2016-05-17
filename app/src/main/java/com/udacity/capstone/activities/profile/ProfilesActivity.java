@@ -266,7 +266,7 @@ public class ProfilesActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<ProfilesResponse> call, Throwable t) {
-                    Log.d("fuck this", t.getMessage());
+                    Log.d(LOG_TAG, t.getMessage());
                 }
             });
         }
