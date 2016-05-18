@@ -20,17 +20,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
-//import com.google.android.gms.maps.GoogleMap;
 import com.androidmapsextensions.GoogleMap;
 import com.androidmapsextensions.OnMapReadyCallback;
-//import com.google.android.gms.maps.OnMapReadyCallback;
-//import com.google.android.gms.maps.SupportMapFragment;
 import com.androidmapsextensions.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-//import com.google.android.gms.maps.model.Marker;
 import com.androidmapsextensions.Marker;
-//import com.google.android.gms.maps.model.MarkerOptions;
 import com.androidmapsextensions.MarkerOptions;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -95,6 +89,9 @@ public class ProfilesActivity extends AppCompatActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+        public static final String PROFILES = "profiles";
+        public static final String PAGE = "page";
+        public static final String PROFILE_ID = "profileId";
 
         private View rootView;
 
@@ -128,9 +125,9 @@ public class ProfilesActivity extends AppCompatActivity {
         public void onSaveInstanceState(Bundle outState) {
             super.onSaveInstanceState(outState);
             String profilesGson = new Gson().toJson(profileArrayList);
-            outState.putString("profiles", profilesGson);
+            outState.putString(PROFILES, profilesGson);
 
-            outState.putInt("page", page);
+            outState.putInt(PAGE, page);
         }
 
         @Override
@@ -144,12 +141,12 @@ public class ProfilesActivity extends AppCompatActivity {
                 profilesAdapter = new ProfilesAdapter(getContext(), profileArrayList);
                 final ListView listView = (ListView) rootView.findViewById(R.id.profiles_list);
                 if (savedInstanceState != null) {
-                    String profilesGson = savedInstanceState.getString("profiles");
+                    String profilesGson = savedInstanceState.getString(PROFILES);
                     Type profilesType = new TypeToken<ArrayList<Profile>>() {}.getType();
                     profileArrayList = new Gson().fromJson(profilesGson, profilesType);
                     profilesAdapter.addAll(profileArrayList);
 
-                    page = savedInstanceState.getInt("page");
+                    page = savedInstanceState.getInt(PAGE);
                 } else {
                     fetchMoreProfiles();
                 }
@@ -162,7 +159,7 @@ public class ProfilesActivity extends AppCompatActivity {
                         int selectedProfileId = i;
                         Profile selectedProfile = profileArrayList.get(selectedProfileId);
                         Intent profileIntent = new Intent(getContext(), ProfileActivity.class);
-                        profileIntent.putExtra("profileId", selectedProfile.getId());
+                        profileIntent.putExtra(PROFILE_ID, selectedProfile.getId());
                         startActivity(profileIntent);
                     }
                 });
@@ -184,9 +181,6 @@ public class ProfilesActivity extends AppCompatActivity {
             } else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
                 rootView = inflater.inflate(R.layout.activity_maps, container, false);
 
-//                SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
-//                        .findFragmentById(R.id.map);
-//                mapFragment.getMapAsync(this);
                 SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                         .findFragmentById(R.id.map);
                 mapFragment.getExtendedMapAsync(this);
@@ -206,17 +200,19 @@ public class ProfilesActivity extends AppCompatActivity {
                 public void onResponse(Call<ProfilesResponse> call, Response<ProfilesResponse> response) {
                     ProfilesResponse profilesResponse = response.body();
                     for (Profile profile : profilesResponse.getData()) {
-                        LatLng profileLocation = new LatLng(
-                                profile.getPostcodeInfo().getLat(),
-                                profile.getPostcodeInfo().getLon()
-                        );
+                        if (!(profile.getPostcodeInfo() == null)) {
+                            LatLng profileLocation = new LatLng(
+                                    profile.getPostcodeInfo().getLat(),
+                                    profile.getPostcodeInfo().getLon()
+                            );
 
-                        Marker profileMarker = gMap.addMarker(new MarkerOptions()
-                                .position(profileLocation)
-                                .title(profile.getName())
-                        );
+                            Marker profileMarker = gMap.addMarker(new MarkerOptions()
+                                    .position(profileLocation)
+                                    .title(profile.getName())
+                            );
 
-                        profileMarker.setData(profile);
+                            profileMarker.setData(profile);
+                        }
                     }
                 }
 
@@ -232,7 +228,7 @@ public class ProfilesActivity extends AppCompatActivity {
                     Profile profile = marker.getData();
 
                     Intent singleProfileIntent = new Intent(getContext(), ProfileActivity.class);
-                    singleProfileIntent.putExtra("profileId", profile.getId());
+                    singleProfileIntent.putExtra(PROFILE_ID, profile.getId());
                     startActivity(singleProfileIntent);
                 }
             });

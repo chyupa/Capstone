@@ -50,15 +50,15 @@ public class LoginActivity extends AppCompatActivity {
                 loginError.setText("");
 
                 if (emailInput.getText().toString().isEmpty()) {
-                    emailInput.setError("Email is required");
+                    emailInput.setError(getString(R.string.error_required_email));
                     success = false;
                 } else if (!isEmailValid(emailInput.getText().toString())) {
-                    emailInput.setError("Invalid Email Address");
+                    emailInput.setError(getString(R.string.error_invalid_email));
                     success = false;
                 }
 
                 if (passwordInput.getText().toString().isEmpty()) {
-                    passwordInput.setError("Password is required");
+                    passwordInput.setError(getString(R.string.error_required_password));
                     success = false;
                 }
 

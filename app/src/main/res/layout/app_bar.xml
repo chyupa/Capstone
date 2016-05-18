@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:textColor="@android:color/white"
-            android:textSize="25sp"
+            android:textSize="@dimen/app_name_text_size"
             android:gravity="center"
 
             />

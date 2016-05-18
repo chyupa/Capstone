@@ -11,4 +11,24 @@
 
     <string name="rate">$ %1.0f / hour</string>
     <string name="dashboard">My Profile</string>
+    <string name="error_required_email">Email is required</string>
+    <string name="error_invalid_email">Invalid Email Address</string>
+    <string name="error_required_password">Password is required</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="login_button">Login</string>
+    <string name="profile_section_bio">Bio</string>
+    <string name="profile_info_bio_demo">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eu ante mi. Nunc efficitur blandit tellus in aliquam. Sed ultrices iaculis faucibus. Duis eleifend quis velit nec sagittis. Fusce gravida urna et dictum malesuada. Proin iaculis, arcu quis aliquam tincidunt, elit diam dapibus felis, nec aliquet magna magna sit amet eros. Nam ultrices ex ut metus fermentum, non consectetur turpis accumsan. Ut eu lobortis velit. Duis dui lectus, convallis id orci quis, convallis vestibulum augue. Nam eu dolor magna. Etiam et sodales lacus. Integer posuere id nisl a ullamcorper. Aliquam eget enim sed enim imperdiet eleifend. Vivamus sit amet lacus in augue gravida imperdiet. Quisque sit amet nulla purus.</string>
+    <string name="profile_skills_title">Skills</string>
+    <string name="profile_postcode_title">Postcode</string>
+    <string name="profile_postcode_demo">SE4 1QB</string>
+    <string name="profile_map_btn">See on map</string>
+    <string name="mail_subject">Capstone - Request for session</string>
+    <string name="profile_not_found">Profile was not found</string>
+    <string name="profile_rate_title">Rate</string>
+    <string name="welcome_message">Welcome. Choose an option in order to proceed</string>
+    <string name="looking_for_a_trainer">Looking for a trainer?</string>
+    <string name="register_as_a_trainer">Register as a trainer</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="login">Login</string>
 </resources>

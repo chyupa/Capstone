@@ -1,6 +1,7 @@
 package com.udacity.capstone.activities.profile;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
@@ -25,6 +26,10 @@ import retrofit2.Response;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    public static final String PROFILE_INFO = "profileInfo";
+    public static final String PROFILE_ID = "profileId";
+    public static final String PROFILE_ERROR = "profileError";
+    public static final String MAP_INFO = "mapInfo";
     private String LOG_TAG = getClass().getSimpleName();
     private Profile profile;
 
@@ -41,7 +46,7 @@ public class ProfileActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         String profileInfoGson = new Gson().toJson(profile);
-        outState.putString("profileInfo", profileInfoGson);
+        outState.putString(PROFILE_INFO, profileInfoGson);
     }
 
     @Override
@@ -62,13 +67,13 @@ public class ProfileActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        int profileId = getIntent().getIntExtra("profileId", 0);
+        int profileId = getIntent().getIntExtra(PROFILE_ID, 0);
         if (profileId == 0) {
             returnToProfilesActivityWithError();
         }
 
         if (savedInstanceState != null) {
-            String profileInfoGson = savedInstanceState.getString("profileInfo");
+            String profileInfoGson = savedInstanceState.getString(PROFILE_INFO);
             profile = new Gson().fromJson(profileInfoGson, Profile.class);
             setInfo(profile);
         } else {
@@ -116,7 +121,7 @@ public class ProfileActivity extends AppCompatActivity {
                     );
 
                     String mapInfoGson = new Gson().toJson(mapInfo);
-                    mapIntent.putExtra("mapInfo", mapInfoGson);
+                    mapIntent.putExtra(MAP_INFO, mapInfoGson);
                     startActivity(mapIntent);
                 }
             });
@@ -126,8 +131,9 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-                emailIntent.putExtra(Intent.EXTRA_EMAIL, profile.getUser().getEmail());
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Capstone - Request for session");
+                emailIntent.setData(Uri.parse("mailto:")); // only email apps should handle this
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{profile.getUser().getEmail()});
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.mail_subject));
                 startActivity(Intent.createChooser(emailIntent, "Send email..."));
             }
         });
@@ -135,7 +141,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void returnToProfilesActivityWithError() {
         Intent profilesIntent = new Intent(getApplicationContext(), ProfilesActivity.class);
-        profilesIntent.putExtra("profileError", "Profile was not found");
+        profilesIntent.putExtra(PROFILE_ERROR, getString(R.string.profile_not_found));
         startActivity(profilesIntent);
     }
 }

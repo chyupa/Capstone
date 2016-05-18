@@ -16,10 +16,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="@dimen/login_input_mt"
             android:gravity="center"
-            android:text="Welcome. Choose an option in order to proceed"
-            android:textSize="16sp" />
+            android:text="@string/welcome_message"
+            android:textSize="@dimen/profile_info_text_size" />
 
         <Button
             android:id="@+id/lookForProfilesBtn"
@@ -27,8 +27,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@color/colorPrimary"
-            android:padding="10dp"
-            android:text="Looking for a trainer?"
+            android:padding="@dimen/cardview_padding"
+            android:text="@string/looking_for_a_trainer"
             android:textColor="@android:color/white" />
 
         <Button
@@ -36,28 +36,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="@dimen/main_buttons_mt"
             android:background="@color/colorPrimary"
-            android:padding="15dp"
-            android:text="Register as a trainer"
+            android:padding="@dimen/button_padding"
+            android:text="@string/register_as_a_trainer"
             android:textColor="@android:color/white" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="@dimen/main_buttons_mt"
             android:layout_gravity="center"
-            android:text="Already have an account?"/>
+            android:text="@string/already_have_an_account"/>
 
         <Button
             android:id="@+id/loginBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login"
+            android:text="@string/login"
             android:background="@color/colorAccent"
             android:textColor="@android:color/white"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="@dimen/login_input_mt"/>
 
     </LinearLayout>
 
