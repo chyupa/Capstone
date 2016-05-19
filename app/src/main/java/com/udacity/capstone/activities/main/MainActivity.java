@@ -12,6 +12,7 @@ import com.udacity.capstone.activities.login.LoginActivity;
 import com.udacity.capstone.activities.profile.ProfilesActivity;
 import com.udacity.capstone.R;
 import com.udacity.capstone.activities.register.RegisterActivity;
+import com.udacity.capstone.sync.CapstoneSyncAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
             Intent loggedInIntent = new Intent(getApplicationContext(), LoggedInProfileActivity.class);
             startActivity(loggedInIntent);
         }
+
+        CapstoneSyncAdapter.initializeSyncAdapter(this);
 
         Button createAccountBtn = (Button) findViewById(R.id.createAccountBtn);
         createAccountBtn.setOnClickListener(new View.OnClickListener() {

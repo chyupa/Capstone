@@ -137,6 +137,8 @@ public class ProfilesActivity extends AppCompatActivity {
             if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
                 rootView = inflater.inflate(R.layout.fragment_profiles, container, false);
 
+
+
                 progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
                 profilesAdapter = new ProfilesAdapter(getContext(), profileArrayList);
                 final ListView listView = (ListView) rootView.findViewById(R.id.profiles_list);
