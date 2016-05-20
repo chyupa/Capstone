@@ -85,7 +85,16 @@ public class CapstoneProvider extends ContentProvider {
                 );
                 break;
             default:
-                throw new UnsupportedOperationException("Unkown uri: " + uri);
+                retCursor = mOpenHelper.getReadableDatabase().query(
+                        CapstoneContract.ProfilesEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+//                throw new UnsupportedOperationException("Unkown uri: " + uri);
         }
         retCursor.setNotificationUri(getContext().getContentResolver(), uri);
         return retCursor;

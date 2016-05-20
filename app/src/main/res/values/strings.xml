@@ -32,6 +32,6 @@
     <string name="already_have_an_account">Already have an account?</string>
     <string name="login">Login</string>
 
-    <string name="content_authority">com.udacity.capstone.app</string>
+    <string name="content_authority">com.udacity.capstone</string>
     <string name="sync_account_type">capstone.gdm.ro</string>
 </resources>

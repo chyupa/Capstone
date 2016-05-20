@@ -30,7 +30,7 @@ import retrofit2.Response;
  */
 public class CapstoneSyncAdapter extends AbstractThreadedSyncAdapter {
 
-    public static final int SYNC_INTERVAL = 60 * 2;
+    public static final int SYNC_INTERVAL = 60 * 180;
     public static final int SYNC_FLEXTIME = SYNC_INTERVAL/3;
 
     public final String LOG_TAG = getClass().getSimpleName();
@@ -54,8 +54,8 @@ public class CapstoneSyncAdapter extends AbstractThreadedSyncAdapter {
                     Vector<ContentValues> cvVector = new Vector<ContentValues>(10);
                     for (Profile profile : profilesResponse.getData()) {
                         ContentValues profileValues = new ContentValues();
-                        profileValues.put(CapstoneContract.ProfilesEntry._ID, profile.getId());
-                        profileValues.put(CapstoneContract.ProfilesEntry.COLUMN_USER_ID, profile.getUser().getId());
+//                        profileValues.put(CapstoneContract.ProfilesEntry._ID, profile.getId());
+                        profileValues.put(CapstoneContract.ProfilesEntry.COLUMN_USER_ID, profile.getUser_id());
                         profileValues.put(CapstoneContract.ProfilesEntry.COLUMN_BIO, profile.getBio());
                         profileValues.put(CapstoneContract.ProfilesEntry.COLUMN_PROFILE_IMAGE, profile.getProfile_image());
                         profileValues.put(CapstoneContract.ProfilesEntry.COLUMN_SKILLS, profile.getSkills());
@@ -69,8 +69,7 @@ public class CapstoneSyncAdapter extends AbstractThreadedSyncAdapter {
                     if (cvVector.size() > 0) {
                         ContentValues[] cvArray = new ContentValues[cvVector.size()];
                         cvVector.toArray(cvArray);
-
-                        getContext().getContentResolver().bulkInsert(CapstoneContract.PostcodesEntry.CONTENT_URI, cvArray);
+                        getContext().getContentResolver().bulkInsert(CapstoneContract.ProfilesEntry.CONTENT_URI, cvArray);
                     }
                     Log.d(LOG_TAG, "Sync finished" + cvVector.size() + " Inserted");
                 }

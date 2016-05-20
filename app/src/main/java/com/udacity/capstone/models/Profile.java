@@ -6,6 +6,7 @@ package com.udacity.capstone.models;
 public class Profile {
 
     private int id;
+    private int user_id;
     private String name;
     private String profile_image;
     private String bio;
@@ -21,6 +22,14 @@ public class Profile {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public String getName() {

@@ -74,7 +74,7 @@
             android:value="@integer/google_play_services_version" />
 
         <provider
-            android:authorities="@string/content_authority"
+            android:authorities="com.udacity.capstone"
             android:name=".data.CapstoneProvider"
             android:exported="false"
             android:syncable="true" />
@@ -94,7 +94,7 @@
                 <action android:name="android.content.SyncAdapter" />
             </intent-filter>
             <meta-data
-                android:name="andoird.content.SyncAdapter"
+                android:name="android.content.SyncAdapter"
                 android:resource="@xml/syncadapter" />
         </service>
     </application>

@@ -10,7 +10,7 @@ import android.util.Log;
  */
 public class CapstoneDbHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
 
     static final String DATABASE_NAME = "profiles.db";
 
@@ -24,25 +24,23 @@ public class CapstoneDbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_PROFILES_TABLE = "CREATE TABLE " + CapstoneContract.ProfilesEntry.TABLE_NAME + " (" +
                 CapstoneContract.ProfilesEntry._ID + " INTEGER PRIMARY KEY," +
                 CapstoneContract.ProfilesEntry.COLUMN_USER_ID + " INT NOT NULL, " +
-                CapstoneContract.ProfilesEntry.COLUMN_NAME + " TEXT NOT NULL, " +
-                CapstoneContract.ProfilesEntry.COLUMN_PROFILE_IMAGE + " TEXT NOT NULL, " +
-                CapstoneContract.ProfilesEntry.COLUMN_BIO + " TEXT NOT NULL, " +
-                CapstoneContract.ProfilesEntry.COLUMN_SKILLS + " TEXT NOT NULL, " +
-                CapstoneContract.ProfilesEntry.COLUMN_RATE + " REAL NOT NULL, " +
-                CapstoneContract.ProfilesEntry.COLUMN_POSTCODE + " TEXT NOT NULL" +
+                CapstoneContract.ProfilesEntry.COLUMN_NAME + " TEXT, " +
+                CapstoneContract.ProfilesEntry.COLUMN_PROFILE_IMAGE + " TEXT, " +
+                CapstoneContract.ProfilesEntry.COLUMN_BIO + " TEXT, " +
+                CapstoneContract.ProfilesEntry.COLUMN_SKILLS + " TEXT, " +
+                CapstoneContract.ProfilesEntry.COLUMN_RATE + " REAL, " +
+                CapstoneContract.ProfilesEntry.COLUMN_POSTCODE + " TEXT" +
                 " );";
 
         final String SQL_CREATE_POSTCODES_TABLE = "CREATE TABLE " + CapstoneContract.PostcodesEntry.TABLE_NAME + " (" +
                 CapstoneContract.PostcodesEntry._ID + " INTEGER PRIMARY KEY," +
                 CapstoneContract.PostcodesEntry.COLUMN_PROFILE_ID + " INTEGER," +
-                CapstoneContract.PostcodesEntry.COLUMN_LAT + " REAL NOT NULL," +
-                CapstoneContract.PostcodesEntry.COLUMN_LON + " REAL NOT NULL," +
+                CapstoneContract.PostcodesEntry.COLUMN_LAT + " REAL," +
+                CapstoneContract.PostcodesEntry.COLUMN_LON + " REAL," +
                 " FOREIGN KEY (" + CapstoneContract.PostcodesEntry.COLUMN_PROFILE_ID + ") REFERENCES " +
                 CapstoneContract.ProfilesEntry.TABLE_NAME + "(" + CapstoneContract.ProfilesEntry._ID + ")"+
                 ")";
 
-        Log.w("DB-QUERY", SQL_CREATE_PROFILES_TABLE);
-        Log.w("DB-QUERY", SQL_CREATE_POSTCODES_TABLE);
         db.execSQL(SQL_CREATE_PROFILES_TABLE);
         db.execSQL(SQL_CREATE_POSTCODES_TABLE);
     }

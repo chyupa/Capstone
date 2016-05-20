@@ -1,7 +1,12 @@
 package com.udacity.capstone.activities.profile;
 
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -30,9 +35,12 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.udacity.capstone.R;
 import com.udacity.capstone.adapters.ProfilesAdapter;
+import com.udacity.capstone.adapters.ProfilesCursorAdapter;
 import com.udacity.capstone.api.CapstoneWebService;
+import com.udacity.capstone.data.CapstoneContract;
 import com.udacity.capstone.models.Profile;
 import com.udacity.capstone.models.response.ProfilesResponse;
+import com.udacity.capstone.sync.CapstoneSyncAdapter;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -83,7 +91,7 @@ public class ProfilesActivity extends AppCompatActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment implements OnMapReadyCallback {
+    public static class PlaceholderFragment extends Fragment implements OnMapReadyCallback, LoaderManager.LoaderCallbacks<Cursor> {
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -93,6 +101,25 @@ public class ProfilesActivity extends AppCompatActivity {
         public static final String PAGE = "page";
         public static final String PROFILE_ID = "profileId";
 
+        private static final int PROFILES_LOADER = 0;
+
+        private static final String[] PROFILES_COLUMNS = {
+                CapstoneContract.ProfilesEntry.TABLE_NAME + "." + CapstoneContract.ProfilesEntry._ID,
+                CapstoneContract.ProfilesEntry.COLUMN_BIO,
+                CapstoneContract.ProfilesEntry.COLUMN_NAME,
+//                CapstoneContract.ProfilesEntry.COLUMN_SKILLS,
+                CapstoneContract.ProfilesEntry.COLUMN_PROFILE_IMAGE,
+//                CapstoneContract.ProfilesEntry.COLUMN_POSTCODE,
+//                CapstoneContract.ProfilesEntry.COLUMN_RATE,
+//                CapstoneContract.PostcodesEntry.COLUMN_LAT,
+//                CapstoneContract.PostcodesEntry.COLUMN_LON
+        };
+
+        public static final int COL_PROFILE_ID = 0;
+        public static final int COL_PROFILE_BIO = 1;
+        public static final int COL_PROFILE_NAME = 2;
+        public static final int COL_PROFILE_IMAGE = 3;
+
         private View rootView;
 
         private final String LOG_TAG = getClass().getSimpleName();
@@ -100,9 +127,13 @@ public class ProfilesActivity extends AppCompatActivity {
         private ArrayList<Profile> profileArrayList = new ArrayList<>();
         private int page = 1;
         private ProfilesAdapter profilesAdapter;
-        private boolean executing = false;
+        private ProfilesCursorAdapter profilesCursorAdapter;
+        private boolean executing = true;
         private boolean noMoreProfiles = false;
         private ProgressBar progressBar;
+        private int mPosition = ListView.INVALID_POSITION;
+        private static final String SELECTED_KEY = "selected_position";
+        private ListView listView = null;
 
         private GoogleMap gMap;
 
@@ -123,11 +154,17 @@ public class ProfilesActivity extends AppCompatActivity {
 
         @Override
         public void onSaveInstanceState(Bundle outState) {
-            super.onSaveInstanceState(outState);
-            String profilesGson = new Gson().toJson(profileArrayList);
-            outState.putString(PROFILES, profilesGson);
 
-            outState.putInt(PAGE, page);
+            if (mPosition != ListView.INVALID_POSITION) {
+                outState.putInt(SELECTED_KEY, mPosition);
+            }
+            super.onSaveInstanceState(outState);
+        }
+
+        @Override
+        public void onActivityCreated(Bundle savedInstanceState) {
+            getLoaderManager().initLoader(PROFILES_LOADER, null, this);
+            super.onActivityCreated(savedInstanceState);
         }
 
         @Override
@@ -137,49 +174,33 @@ public class ProfilesActivity extends AppCompatActivity {
             if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
                 rootView = inflater.inflate(R.layout.fragment_profiles, container, false);
 
-
-
                 progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
                 profilesAdapter = new ProfilesAdapter(getContext(), profileArrayList);
-                final ListView listView = (ListView) rootView.findViewById(R.id.profiles_list);
-                if (savedInstanceState != null) {
-                    String profilesGson = savedInstanceState.getString(PROFILES);
-                    Type profilesType = new TypeToken<ArrayList<Profile>>() {}.getType();
-                    profileArrayList = new Gson().fromJson(profilesGson, profilesType);
-                    profilesAdapter.addAll(profileArrayList);
+                listView = (ListView) rootView.findViewById(R.id.profiles_list);
 
-                    page = savedInstanceState.getInt(PAGE);
-                } else {
-                    fetchMoreProfiles();
-                }
-
-                listView.setAdapter(profilesAdapter);
+                profilesCursorAdapter = new ProfilesCursorAdapter(getActivity(), null, 0);
+                listView.setAdapter(profilesCursorAdapter);
 
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        int selectedProfileId = i;
-                        Profile selectedProfile = profileArrayList.get(selectedProfileId);
-                        Intent profileIntent = new Intent(getContext(), ProfileActivity.class);
-                        profileIntent.putExtra(PROFILE_ID, selectedProfile.getId());
-                        startActivity(profileIntent);
-                    }
-                });
-
-                listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-                    @Override
-                    public void onScrollStateChanged(AbsListView absListView, int i) {
-                    }
-
-                    @Override
-                    public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                        if ((firstVisibleItem + visibleItemCount) >= totalItemCount && !executing) {
-                            needMoreProfiles = true;
-                            fetchMoreProfiles();
-                            page++;
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Cursor cursor = (Cursor) parent.getItemAtPosition(position);
+                        if (cursor != null) {
+                            /**
+                             * TODO: start intent to single profile view
+                             */
                         }
+                        mPosition = position;
+
                     }
                 });
+
+                if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
+                    // The listview probably hasn't even been populated yet.  Actually perform the
+                    // swapout in onLoadFinished.
+                    mPosition = savedInstanceState.getInt(SELECTED_KEY);
+                }
+
             } else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
                 rootView = inflater.inflate(R.layout.activity_maps, container, false);
 
@@ -267,6 +288,41 @@ public class ProfilesActivity extends AppCompatActivity {
                     Log.d(LOG_TAG, t.getMessage());
                 }
             });
+        }
+
+        @Override
+        public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+            Uri profilesUri = CapstoneContract.ProfilesEntry.buildProfilesUri(100);
+//
+            return new CursorLoader(getActivity(),
+                    profilesUri,
+                    PROFILES_COLUMNS,
+                    null,
+                    null,
+                    null
+                    );
+        }
+
+        @Override
+        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+            Log.d(LOG_TAG, "query finished");
+            if (profilesCursorAdapter != null) {
+                profilesCursorAdapter.swapCursor(data);
+            }
+            if (progressBar != null) {
+                progressBar.setIndeterminate(false);
+                progressBar.setVisibility(View.GONE);
+            }
+            if (mPosition != ListView.INVALID_POSITION) {
+                // If we don't need to restart the loader, and there's a desired position to restore
+                // to, do so now.
+                listView.smoothScrollToPosition(mPosition);
+            }
+        }
+
+        @Override
+        public void onLoaderReset(Loader<Cursor> loader) {
+            profilesCursorAdapter.swapCursor(null);
         }
     }
 
