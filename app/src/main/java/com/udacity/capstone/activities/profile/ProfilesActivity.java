@@ -1,5 +1,7 @@
 package com.udacity.capstone.activities.profile;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.content.Intent;
@@ -72,6 +74,8 @@ public class ProfilesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profiles);
+
+//        CapstoneSyncAdapter.syncImmediately(getApplication());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -186,9 +190,9 @@ public class ProfilesActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Cursor cursor = (Cursor) parent.getItemAtPosition(position);
                         if (cursor != null) {
-                            /**
-                             * TODO: start intent to single profile view
-                             */
+                            Intent profileSingleIntent = new Intent(getContext(), ProfileActivity.class);
+                            profileSingleIntent.putExtra("profileId", Integer.valueOf(cursor.getString(COL_PROFILE_ID)));
+                            startActivity(profileSingleIntent);
                         }
                         mPosition = position;
 
@@ -200,6 +204,30 @@ public class ProfilesActivity extends AppCompatActivity {
                     // swapout in onLoadFinished.
                     mPosition = savedInstanceState.getInt(SELECTED_KEY);
                 }
+
+                listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+                    @Override
+                    public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+                    }
+
+                    @Override
+                    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                        Log.d(LOG_TAG, "first visible item " + firstVisibleItem);
+                        Log.d(LOG_TAG, "visible item count " + visibleItemCount);
+                        Log.d(LOG_TAG, "total item count " + totalItemCount);
+                        if (firstVisibleItem + visibleItemCount == totalItemCount) {
+                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                            int lastPageSynced = sharedPreferences.getInt(getString(R.string.page_sync_key), 1);
+
+                            sharedPreferences.edit()
+                                    .putInt(getString(R.string.page_sync_key), lastPageSynced + 1)
+                                    .commit();
+
+                            CapstoneSyncAdapter.syncImmediately(getContext());
+                        }
+                    }
+                });
 
             } else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
                 rootView = inflater.inflate(R.layout.activity_maps, container, false);

@@ -7,10 +7,12 @@ import android.content.ContentProviderClient;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.SyncRequest;
 import android.content.SyncResult;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.udacity.capstone.R;
@@ -43,8 +45,11 @@ public class CapstoneSyncAdapter extends AbstractThreadedSyncAdapter {
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
         Log.d(LOG_TAG, "Starting Sync");
 
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        int lastPageSynced = sharedPreferences.getInt(getContext().getString(R.string.page_sync_key), 1);
+
         CapstoneWebService webService = new CapstoneWebService();
-        Call<ProfilesResponse> profilesResponseCall = webService.service.getProfiles(1);
+        Call<ProfilesResponse> profilesResponseCall = webService.service.getProfiles(lastPageSynced);
         profilesResponseCall.enqueue(new Callback<ProfilesResponse>() {
             @Override
             public void onResponse(Call<ProfilesResponse> call, Response<ProfilesResponse> response) {
@@ -54,7 +59,7 @@ public class CapstoneSyncAdapter extends AbstractThreadedSyncAdapter {
                     Vector<ContentValues> cvVector = new Vector<ContentValues>(10);
                     for (Profile profile : profilesResponse.getData()) {
                         ContentValues profileValues = new ContentValues();
-//                        profileValues.put(CapstoneContract.ProfilesEntry._ID, profile.getId());
+                        profileValues.put(CapstoneContract.ProfilesEntry._ID, profile.getId());
                         profileValues.put(CapstoneContract.ProfilesEntry.COLUMN_USER_ID, profile.getUser_id());
                         profileValues.put(CapstoneContract.ProfilesEntry.COLUMN_BIO, profile.getBio());
                         profileValues.put(CapstoneContract.ProfilesEntry.COLUMN_PROFILE_IMAGE, profile.getProfile_image());
@@ -72,6 +77,10 @@ public class CapstoneSyncAdapter extends AbstractThreadedSyncAdapter {
                         getContext().getContentResolver().bulkInsert(CapstoneContract.ProfilesEntry.CONTENT_URI, cvArray);
                     }
                     Log.d(LOG_TAG, "Sync finished" + cvVector.size() + " Inserted");
+                } else {
+                    sharedPreferences.edit()
+                            .putInt(getContext().getString(R.string.page_sync_key), 1)
+                            .apply();
                 }
             }
 
@@ -156,12 +165,12 @@ public class CapstoneSyncAdapter extends AbstractThreadedSyncAdapter {
         /*
          * Since we've created an account
          */
-        CapstoneSyncAdapter.configurePeriodicSync(context, SYNC_INTERVAL, SYNC_FLEXTIME);
+        //CapstoneSyncAdapter.configurePeriodicSync(context, SYNC_INTERVAL, SYNC_FLEXTIME);
 
         /*
          * Without calling setSyncAutomatically, our periodic sync will not be enabled.
          */
-        ContentResolver.setSyncAutomatically(newAccount, context.getString(R.string.content_authority), true);
+        //ContentResolver.setSyncAutomatically(newAccount, context.getString(R.string.content_authority), true);
 
         /*
          * Finally, let's do a sync to get things started

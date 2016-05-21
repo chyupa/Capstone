@@ -106,7 +106,7 @@ public class ProfileActivity extends AppCompatActivity {
         profileSkills.setText(profile.getSkills());
         profilePostcode.setText(profile.getPostcode());
 
-        if (profile.getPostcode().isEmpty()) {
+        if (profile.getPostcode() == null) {
             seeOnMapBtn.setClickable(false);
             seeOnMapBtn.setVisibility(View.INVISIBLE);
         } else {

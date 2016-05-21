@@ -10,7 +10,7 @@ import android.util.Log;
  */
 public class CapstoneDbHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 5;
 
     static final String DATABASE_NAME = "profiles.db";
 
