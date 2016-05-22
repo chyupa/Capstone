@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="10dp"
-    app:contentPadding="10dp">
+    android:elevation="@dimen/profile_list_item_elevation"
+    app:contentPadding="@dimen/cardview_padding">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/profile_item_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp" />
+            android:layout_width="@dimen/profile_image_square_width"
+            android:layout_height="@dimen/profile_image_square_height" />
 
         <TextView
             android:id="@+id/profile_item_name"
@@ -25,23 +25,23 @@
             android:layout_gravity="center_vertical"
             android:gravity="center"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="20sp"
+            android:textSize="@dimen/profile_list_item_name"
             tools:text="Razvan Toader" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="@dimen/profile_list_item_mt"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="@dimen/profile_list_item_bio_padding">
 
         <TextView
             android:id="@+id/profile_item_bio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorSecondaryText"
-            android:textSize="18sp"
+            android:textSize="@dimen/profile_info_text_size"
             tools:text="asd as as das sd asda s d" />
 
     </LinearLayout>

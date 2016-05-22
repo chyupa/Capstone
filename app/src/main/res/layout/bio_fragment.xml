@@ -10,7 +10,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:behavior_overlapTop="64dp">
+        app:behavior_overlapTop="@dimen/nested_scroll_view_top">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,16 +21,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="100dp"
-                android:text="Describe yourself" />
+                android:layout_marginTop="@dimen/profile_image_inst_mt"
+                android:text="@string/profile_bio_inst" />
 
             <EditText
                 android:id="@+id/input_bio"
-                android:layout_width="300dp"
+                android:layout_width="@dimen/text_input_width"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:hint="Tell us a bit about yourself"
+                android:layout_marginTop="@dimen/login_input_mt"
+                android:hint="@string/register_profile_bio_hint"
                 android:inputType="textLongMessage|textMultiLine"/>
 
             <Button
@@ -38,9 +38,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/login_input_mt"
                 android:background="@color/colorPrimary"
-                android:text="Save"
+                android:text="@string/register_next_step_btn"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>

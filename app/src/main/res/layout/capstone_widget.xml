@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:padding="@dimen/cardview_padding">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="20sp"
+            android:textSize="@dimen/profile_name"
             tools:text="Razvan Toader"/>
 
         <TextView
@@ -28,21 +28,21 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="20sp"
+            android:textSize="@dimen/profile_info_text_size"
             tools:text="20"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:padding="@dimen/widget_bio_padding">
 
             <TextView
                 android:id="@+id/profile_item_bio"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorSecondaryText"
                 android:layout_weight="1"
-                android:textSize="18sp"
+                android:textSize="@dimen/profile_info_text_size"
                 tools:text="@string/profile_info_bio_demo"/>
 
             <Button
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:padding="@dimen/button_padding"
-                android:text="Refresh"/>
+                android:text="@string/widget_btn"/>
 
         </LinearLayout>
     </LinearLayout>

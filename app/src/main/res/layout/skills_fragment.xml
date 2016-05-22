@@ -10,7 +10,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:behavior_overlapTop="64dp">
+        app:behavior_overlapTop="@dimen/nested_scroll_view_top">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,16 +21,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="100dp"
-                android:text="What skillz do you have?" />
+                android:layout_marginTop="@dimen/login_first_input_mt"
+                android:text="@string/register_profile_skill_inst" />
 
             <EditText
                 android:id="@+id/input_skills"
-                android:layout_width="300dp"
+                android:layout_width="@dimen/text_input_width"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:hint="Tell us your skills and qualifications"
+                android:layout_marginTop="@dimen/login_input_mt"
+                android:hint="@string/profile_skills_hint"
                 android:inputType="textLongMessage|textMultiLine"/>
 
             <Button
@@ -38,9 +38,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/login_input_mt"
                 android:background="@color/colorPrimary"
-                android:text="Save"
+                android:text="@string/register_next_step_btn"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
