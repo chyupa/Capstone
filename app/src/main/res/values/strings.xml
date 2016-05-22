@@ -35,4 +35,25 @@
     <string name="content_authority">com.udacity.capstone</string>
     <string name="sync_account_type">capstone.gdm.ro</string>
     <string name="page_sync_key">page_sync</string>
+    <string name="charge_rate">How much do you charge per hour?</string>
+    <string name="register_profile_name">Name</string>
+    <string name="register_profile_name_hint">Enter your name</string>
+    <string name="register_profile_email">Email</string>
+    <string name="register_profile_email_hint">Enter your email</string>
+    <string name="register_profile_password">Password</string>
+    <string name="register_profile_password_hint">Enter your password</string>
+    <string name="create_your_free_account_btn">Create your free account</string>
+    <string name="upload_image_instruction">Upload a picture of yourself</string>
+    <string name="profile_image_error">Profile image is required</string>
+    <string name="upload">Upload</string>
+    <string name="profile_bio_inst">Describe yourself</string>
+    <string name="register_profile_bio_hint">Tell us a bit about yourself</string>
+    <string name="register_next_step_btn">Save</string>
+    <string name="register_profile_skill_inst">What skills do you have?</string>
+    <string name="profile_skills_hint">Tell us your skills and qualifications</string>
+    <string name="register_profile_postcode_inst">Tell us your postcodeInfo so clients can see your profile on the map</string>
+    <string name="register_profile_postcode_hint">Enter your Poscode</string>
+    <string name="register_profile_completed_inst">Your profile is set up. Click the button below to see how it looks</string>
+    <string name="register_profile_completed_btn">Go to my profile</string>
+    <string name="widget_btn">Refresh</string>
 </resources>

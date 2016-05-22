@@ -9,7 +9,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:behavior_overlapTop="64dp">
+        app:behavior_overlapTop="@dimen/nested_scroll_view_top">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,16 +20,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="100dp"
-                android:text="How much do you charge per hour?"
+                android:layout_marginTop="@dimen/login_first_input_mt"
+                android:text="@string/charge_rate"
                 />
 
             <NumberPicker
                 android:id="@+id/input_rate"
-                android:layout_width="200dp"
+                android:layout_width="@dimen/register_profile_picker_width"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/login_input_mt"
                 >
 
             </NumberPicker>
@@ -39,9 +39,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/login_input_mt"
                 android:background="@color/colorPrimary"
-                android:text="Save"
+                android:text="@string/register_next_step_btn"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>

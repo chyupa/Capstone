@@ -6,20 +6,20 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:text="Your profile is set up. Click the button below to see how it looks"
-        android:textSize="24sp"
-        android:padding="10dp"/>
+        android:layout_marginTop="@dimen/login_first_input_mt"
+        android:text="@string/register_profile_completed_inst"
+        android:textSize="@dimen/profile_name"
+        android:padding="@dimen/register_profile_inst_padding"/>
 
     <Button
         android:id="@+id/goToProfile_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go to my profile"
+        android:text="@string/register_profile_completed_btn"
         android:background="@color/colorPrimary"
         android:textColor="@android:color/white"
-        android:padding="10dp"
+        android:padding="@dimen/button_padding"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"/>
+        android:layout_marginTop="@dimen/register_profile_complete_btn_mt"/>
 
 </LinearLayout>
